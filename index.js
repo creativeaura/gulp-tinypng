@@ -9,6 +9,7 @@ var inspect = require('util').inspect;
 var fs = require('fs');
 
 var PluginError = gutil.PluginError;
+var AUTH_TOKEN;
 
 // Consts
 const PLUGIN_NAME = 'gulp-tinypng';
@@ -49,7 +50,7 @@ var readTemp = function(filename) {
 
 // Plugin level function (dealing with files)
 function gulpPrefixer(prefixText) {
-
+  AUTH_TOKEN = new Buffer('api:' + prefixText).toString('base64')
   if (!prefixText) {
     throw PluginError(PLUGIN_NAME, "Missing prefix text!");
   }
@@ -92,7 +93,7 @@ function tinypng(file, cb) {
       'Accept': '*/*',
       'Cache-Control':  'no-cache',
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': 'Basic YXBpOjhGaVFGajlvV3dFeVRCSE1Nd3hqdnVZTngwNUZwaGsy'
+      'Authorization': 'Basic ' + AUTH_TOKEN
     },
     body: file.contents
   }, function(error, response, body) {
