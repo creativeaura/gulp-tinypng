@@ -17,7 +17,7 @@ npm install --save-dev gulp-tinypng
 
 ```js
 var gulp = require('gulp');
-var imagemin = require('gulp-tinypng');
+var tinypng = require('gulp-tinypng');
 
 gulp.task('tinypng', function () {
 	gulp.src('src/image.png')
