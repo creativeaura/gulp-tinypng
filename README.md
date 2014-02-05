@@ -20,9 +20,9 @@ var gulp = require('gulp');
 var tinypng = require('gulp-tinypng');
 
 gulp.task('tinypng', function () {
-	gulp.src('src/image.png')
-		.pipe(tingpng('API_KEY'))
-		.pipe(gulp.dest('dist'));
+	gulp.src('src/**/*.png')
+		.pipe(tinypng('API_KEY'))
+		.pipe(gulp.dest('compressed_images'));
 });
 ```
 
