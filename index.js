@@ -1,5 +1,6 @@
 // through2 is a thin wrapper around node transform streams
 var through = require('through2');
+var prettyBytes = require('pretty-bytes');
 var gutil = require('gulp-util');
 var mkdirp = require('mkdirp');
 var rmdir = require( 'rmdir' );
@@ -64,10 +65,12 @@ function gulpPrefixer(prefixText) {
     }
 
     if (file.isBuffer()) {
+      var prevLength = file.contents.length;
       tinypng(file, function(data) {
         file.contents = data;
         this.push(file);
-        gutil.log('gulp-tingpng: [compressing]', gutil.colors.green('✔ ') + file.relative + gutil.colors.gray(' (done)'));
+        gutil.log('gulp-tingpng: ', gutil.colors.green('✔ ') + file.relative + ' (saved ' + 
+                  prettyBytes(prevLength - data.length) + ' - ' + ((1 - data.length / prevLength) * 100).toFixed(0) + '%)');
         return callback();
       }.bind(this));
     }
