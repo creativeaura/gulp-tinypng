@@ -1,4 +1,5 @@
 .idea/
+.gulp
 compressed_images/
 node_modules/
 original_images/

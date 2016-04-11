@@ -32,15 +32,16 @@
   },
   "license": "MIT",
   "dependencies": {
-    "gulp-util": "~2.2.14",
-    "gulp": "~3.3.4",
     "event-stream": "~3.1.0",
-    "request": "~2.31.0",
-    "vinyl": "~0.2.3",
-    "mkdirp": "~0.3.5",
-    "rmdir": "~1.0.4",
-    "through2": "~0.4.1",
-    "pretty-bytes": "~0.1.2"
+    "gulp": "^3.9.1",
+    "gulp-util": "^2.2.20",
+    "md5": "^2.1.0",
+    "mkdirp": "^0.3.5",
+    "pretty-bytes": "^0.1.2",
+    "request": "^2.31.0",
+    "rmdir": "^1.0.4",
+    "through2": "^0.4.2",
+    "vinyl": "^0.2.3"
   },
   "devDependencies": {
     "mocha": "*"
