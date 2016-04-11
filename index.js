@@ -23,6 +23,18 @@ function prefixStream(prefixText) {
 	return stream;
 }
 
+var createTempDir = function() {
+	fs.access('.gulp/tinypng', fs.F_OK, function(err) {
+		if (err) {
+			mkdirp('.gulp/tinypng', function(err) {
+				if (err) {
+					console.error('Error creating temp folder');
+				}
+			});
+		}
+	});
+}
+
 var cleanTemp = function() {
 	rmdir('.gulp/tinypng', function(err, dirs, files) {
 		mkdirp('.gulp/tinypng', function(err) {
@@ -57,16 +69,18 @@ var readTemp = function(filename, cb) {
 
 // Plugin level function (dealing with files)
 function gulpPrefixer(options) {
-  var apiKey = options.apiKey;
-  var cached = options.cached;
+	var apiKey = options.apiKey;
+	var cached = options.cached;
 	AUTH_TOKEN = new Buffer('api:' + apiKey).toString('base64')
 	if (!apiKey) {
 		throw new PluginError(PLUGIN_NAME, "Missing api key!");
 	}
 	apiKey = new Buffer(apiKey); // allocate ahead of time
-  if(!cached){
-    cleanTemp();
-  }
+	if (!cached) {
+		cleanTemp();
+	} else {
+		createTempDir();
+	}
 	// Creating a stream through which each file will pass
 	var stream = through.obj(function(file, enc, callback) {
 		if (file.isNull()) {
@@ -134,7 +148,7 @@ var tinyNewPng = function(file, cb) {
 
 function tinypng(file, cb) {
 	var tmpFileName = md5(file.contents);
-  // console.log(tmpFileName);
+	// console.log(tmpFileName);
 	readTemp(tmpFileName, function(err, tmpFile) {
 		if (err) {
 			tinyNewPng(file, function(data) {
